@@ -174,7 +174,7 @@ if ($releases instanceof \Traversable) {
 
 		$determinedCat = $categorize->determineCategory($release['group_id'], $newName);
 
-		\NameFixer::echoChangedReleaseName([
+		NameFixer::echoChangedReleaseName([
 											'new_name'     => $newName,
 											'old_name'     => $release['oldname'],
 											'new_category' => $categorize->getNameByid($determinedCat),

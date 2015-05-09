@@ -1,7 +1,13 @@
 <?php
 require_once dirname(__FILE__) . '/../../../www/config.php';
 
-use \nzedb\processing\PostProcess;
+use nzedb\Categorize;
+use nzedb\NameFixer;
+use nzedb\Nfo;
+use nzedb\NNTP;
+use nzedb\NZBContents;
+use nzedb\SphinxSearch;
+use nzedb\processing\PostProcess;
 
 $pdo = new \nzedb\db\Settings();
 
@@ -33,9 +39,9 @@ if (empty($unrarPath)) {
 	exit('The site setting for the unrar path must not be empty!' . PHP_EOL);
 }
 
-$nntp        = new \NNTP(['Settings' => $pdo]);
-$nfo         = new \Nfo(['Echo' => true, 'Settings' => $pdo]);
-$nzbContents = new \NZBContents(
+$nntp        = new NNTP(['Settings' => $pdo]);
+$nfo         = new Nfo(['Echo' => true, 'Settings' => $pdo]);
+$nzbContents = new NZBContents(
 	[
 		'Settings'    => $pdo,
 		'Echo'        => true,
@@ -44,7 +50,7 @@ $nzbContents = new \NZBContents(
 		'NNTP'        => $nntp
 	]
 );
-$categorize = new \Categorize(['Settings' => $pdo]);
+$categorize = new Categorize(['Settings' => $pdo]);
 
 $releases = $pdo->queryDirect(
 	sprintf('
@@ -64,7 +70,7 @@ if ($releases instanceof \Traversable) {
 
 	$nntp->doConnect();
 
-	$sphinx = new \SphinxSearch();
+	$sphinx = new SphinxSearch();
 
 	foreach ($releases as $release) {
 

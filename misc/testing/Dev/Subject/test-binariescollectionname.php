@@ -1,14 +1,18 @@
 <?php
 require_once dirname(__FILE__) . '/../../../../www/config.php';
 
+use nzedb\Binaries;
+use nzedb\Groups;
+use nzedb\NNTP;
+
 if (!isset($argv[1])) {
 	exit("You must start the script like this : php test-backfillcleansubject.php true for all groups, replace true for the group name if you want to do 1 group.\n");
 } else {
 	if ($argv[1] == "true") {
-		$groups    = new \Groups();
+		$groups    = new Groups();
 		$grouplist = $groups->getActive();
-		$nntp      = new \NNTP(['Settings' => $groups->pdo]);
-		$binaries  = new \Binaries([
+		$nntp      = new NNTP(['Settings' => $groups->pdo]);
+		$binaries  = new Binaries([
 									'NNTP'     => $nntp, 'Groups' => $groups,
 									'Settings' => $groups->pdo
 								   ]);
@@ -20,8 +24,8 @@ if (!isset($argv[1])) {
 			$nntp->doQuit();
 		}
 	} else {
-		$nntp     = new \NNTP();
-		$binaries = new \Binaries(['NNTP' => $nntp, 'Settings' => $nntp->pdo]);
+		$nntp     = new NNTP();
+		$binaries = new Binaries(['NNTP' => $nntp, 'Settings' => $nntp->pdo]);
 		if ($nntp->doConnect() !== true) {
 			exit();
 		}

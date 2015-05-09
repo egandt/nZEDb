@@ -1,10 +1,11 @@
 <?php
 require_once dirname(__FILE__) . '/../../../www/config.php';
 
+use nzedb\ColorCLI;
 use nzedb\db\Settings;
 
 exit('Needs to be rewritten');
-$cli = new \ColorCLI();
+$cli = new ColorCLI();
 
 
 if (!isset($argv[1])) {

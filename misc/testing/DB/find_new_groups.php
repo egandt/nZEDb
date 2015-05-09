@@ -9,10 +9,11 @@
 
 require_once dirname(__FILE__) . '/../../../www/config.php';
 
+use nzedb\NNTP;
 use nzedb\db\Settings;
 
 $pdo = new Settings();
-$nntp = new \NNTP(['Settings' => $pdo]);
+$nntp = new NNTP(['Settings' => $pdo]);
 if ($nntp->doConnect() !== true) {
 	exit();
 }

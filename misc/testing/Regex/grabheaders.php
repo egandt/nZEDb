@@ -2,14 +2,17 @@
 
 require_once dirname(__FILE__) . '/../../../www/config.php';
 
+use nzedb\ColorCLI;
+use nzedb\NNTP;
+
 if (!isset($argv[1])) {
 	exit();
 }
 
 $group = $argv[1];
 //$cleaner = new CollectionsCleaning();
-$nntp = new \NNTP();
-$cli = new \ColorCLI();
+$nntp = new NNTP();
+$cli = new ColorCLI();
 if ($nntp->doConnect() !== true) {
 	exit($cli->error("Unable to connect to usenet."));
 }

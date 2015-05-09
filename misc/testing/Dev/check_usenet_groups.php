@@ -7,6 +7,7 @@
  */
 require_once dirname(__FILE__) . '/../../../www/config.php';
 
+use nzedb\NNTP;
 use nzedb\db\Settings;
 
 $pdo = new Settings();
@@ -16,7 +17,7 @@ if (!isset($argv[1])) {
 		. "php $argv[0] 1000000   ...: To show all groups you do not have with more than 1000000 posts per hour.\n"));
 }
 
-$nntp = new \NNTP(['Settings' => $pdo]);
+$nntp = new NNTP(['Settings' => $pdo]);
 if ($nntp->doConnect() !== true) {
 	exit();
 }

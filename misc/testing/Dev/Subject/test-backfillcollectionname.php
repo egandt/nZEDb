@@ -2,16 +2,21 @@
 
 require_once dirname(__FILE__) . '/../../../../www/config.php';
 
+use nzedb\Backfill;
+use nzedb\Groups;
+use nzedb\NNTP;
+use nzedb\db\Settings;
+
 if (!isset($argv[1])) {
 	exit('You must start the script like this (# of articles) : php test-backfillcleansubject.php 20000' . "\n");
 } else {
-	$pdo = new \nzedb\db\Settings();
-	$nntp = new \NNTP(['Settings' => $pdo]);
+	$pdo = new Settings();
+	$nntp = new NNTP(['Settings' => $pdo]);
 	if ($nntp->doConnect() !== true) {
 		exit($pdo->log->error("Unable to connect to usenet."));
 	}
-	$backfill = new \Backfill(['NNTP' => $nntp, 'Settings' => $pdo]);
-	$groups = new \Groups(['Settings' => $pdo]);
+	$backfill = new Backfill(['NNTP' => $nntp, 'Settings' => $pdo]);
+	$groups = new Groups(['Settings' => $pdo]);
 	$grouplist = $groups->getActive();
 	foreach ($grouplist as $name) {
 		dogroup($name["name"], $argv[1]);
